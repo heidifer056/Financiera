@@ -1,0 +1,18 @@
+Consulta SQL para obtener todos los pagos acumulados por fecha y contrato de los clientes en el mes anterior 
+
+   SELECT 
+            id_contrato,
+            fecha AS mes,
+            sum(monto) AS total_pagos
+        FROM 
+            pagos
+        WHERE 
+            activo = True 
+            AND fecha >= date_trunc('month', current_date) - interval '1 month' 
+            AND fecha < date_trunc('month', current_date)
+        GROUP BY 
+            id_contrato, 
+            fecha
+        ORDER BY 
+            id_contrato, 
+            mes;
